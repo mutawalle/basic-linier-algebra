@@ -5,8 +5,6 @@ import src.Algoritma.*;
 import src.Primitif.*;
 import java.util.Scanner;
 
-import javax.swing.text.AbstractDocument.BranchElement;
-
 public class Main {
     public static void main(String[] args) {
         Matrix m;
@@ -29,10 +27,15 @@ public class Main {
                 Cramer.cramer(m, x);
                 break;
             case "21":
-                System.out.println(Determinant.getDeterminantByOBE(m));
+                Determinant.showDetOBE(m);
                 break;
             case "22":
-                System.out.println(Determinant.getDeterminantByCofactor(m));
+                Determinant.showDetCofactor(m);
+                break;
+            case "31":
+                Invers.showInversOBE(m);
+            case "32":
+                Invers.showInversCofactor(m);
                 break;
         }
     }

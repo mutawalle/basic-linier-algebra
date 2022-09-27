@@ -59,5 +59,54 @@ public class Primitif {
 
         return x;
     }
+
+    // mengembalikan kofaktor dari matriks
+    public static Matrix kofaktor(Matrix m, int a, int b){
+        double[][] temp = new double[m.row-1][m.col-1];
+        int bar,kol;
+
+        bar = 0;
+        kol = 0;
+
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                if(i != a && j != b){
+                    temp[bar][kol] = m.contents[i][j];
+                    kol++;
+                    if(kol == m.col-1){
+                        bar++;
+                        kol %= (m.col-1);
+                    }
+                }
+            }
+        }
+        Matrix hasil = new Matrix(temp, m.row-1, m.col-1);
+        return hasil;
+    }
+
+    // mengembalikan transpos dari sebuah matrix
+    public static Matrix transpose(Matrix m){
+        double[][] temp = new double[m.col][m.row];
+        Matrix hasil;
+
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                temp[j][i] = m.contents[i][j];
+            }
+        }
+
+        hasil = new Matrix(temp, m.col, m.row);
+
+        return hasil;
+    }
+
+    public static Matrix matrixKaliSkalar(Matrix m, double x){
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                m.contents[i][j] *= x;
+            }
+        }
+        return m;
+    }
 }
 

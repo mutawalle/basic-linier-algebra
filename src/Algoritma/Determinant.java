@@ -1,6 +1,7 @@
 package src.Algoritma;
 
 import src.ADTMatrix.Matrix;
+import src.Primitif.*;
 
 public class Determinant {
     public static void showDetOBE(Matrix m){
@@ -70,38 +71,12 @@ public class Determinant {
             hasil = 0;
             for(int i=0;i<m.col;i++){
                 if(i%2==0){
-                    hasil += getDeterminantByCofactor(kofaktor(m, 0, i));
+                    hasil += m.contents[0][i]*getDeterminantByCofactor(Primitif.kofaktor(m, 0, i));
                 }else{
-                    hasil += (-1)*getDeterminantByCofactor(kofaktor(m, 0, i));
+                    hasil += (-1)*m.contents[0][i]*getDeterminantByCofactor(Primitif.kofaktor(m, 0, i));
                 }
             }
             return hasil;
         }
-    }
-
-    // mengembalikan kofaktor dari matriks
-    public static Matrix kofaktor(Matrix m, int a, int b){
-        double[][] temp = new double[m.row-1][m.col-1];
-        int bar,kol;
-
-        bar = 0;
-        kol = 0;
-
-        for(int i=0;i<m.row;i++){
-            for(int j=0;j<m.col;j++){
-                if(i != a && j != b){
-                    temp[bar][kol] = m.contents[i][j];
-                    kol++;
-                    if(kol == m.col-1){
-                        bar++;
-                        kol %= (m.col-1);
-                    }
-                }
-            }
-        }
-
-        Matrix hasil = new Matrix(temp, m.row-1, m.col-1);
-
-        return hasil;
     }
 }
