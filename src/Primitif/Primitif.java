@@ -108,5 +108,26 @@ public class Primitif {
         }
         return m;
     }
+
+    public static Matrix readMatrix1(int r, int c) {
+        // Kamus
+        Scanner input = new Scanner(System.in);
+        double[][] matriks;
+        Matrix m;
+        // create matriks
+        matriks = new double[r][c];
+
+        // input matriks
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                matriks[i][j] = input.nextDouble();
+            }
+        }
+
+        // create Matrix
+        m = new Matrix(matriks, r, c);
+
+        return m;
+    }
 }
 
