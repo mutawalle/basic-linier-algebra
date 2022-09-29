@@ -6,6 +6,7 @@ import src.ADTMatrix.Matrix;
 
 public class Primitif {
     public static Matrix readMatrix() {
+        
         // Kamus
         Scanner input = new Scanner(System.in);
         int r,c;
@@ -29,7 +30,7 @@ public class Primitif {
         }
 
         // create Matrix
-        m = new Matrix(matriks, r, c);
+        m = new Matrix (r, c);
 
         return m;
     }
