@@ -1,29 +1,76 @@
 package src.Algoritma;
 
-import src.ADTMatrix.Matrix;
+import java.util.Scanner;
+
+import src.ADTMatrix.*;
 import src.Primitif.Primitif;
+import src.InputOutput.*;
 
 public class Invers {
-    public static void inversSPL(Matrix m, double[] x){
+    public static void inversSPL(){
+        Matrix temp;
+        PasanganMatrix inputan;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            temp = InputOutputKeyboard.inputSPL();
+            inputan = InputOutputFile.pisah(temp);
+        }else{
+            Matrix matriksFile;
+            matriksFile =  InputOutputFile.bacaFile();
+            inputan = InputOutputFile.pisah(matriksFile);
+        }
+        Matrix m = inputan.m;
+        Matrix x = inputan.x;
         m = getInversByOBE(m);
-        Primitif.displayMatrix(m);
+        x = Primitif.matriksKaliMatriks(m, x);
+        for(int i=0;i<x.row;i++){
+            System.out.println(x.contents[i][0]);
+        } 
     }
 
-    public static void showInversOBE(Matrix m){
-        if(Determinant.getDeterminantByCofactor(m) == 0){
+    public static void showInversOBE(){
+        Matrix inputan;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            inputan = InputOutputKeyboard.inputSquare();
+        }else{
+            Matrix matriksFile;
+            matriksFile =  InputOutputFile.bacaFile();
+            inputan = matriksFile;
+        }
+        
+        if(Determinant.getDeterminantByCofactor(inputan) == 0){
             System.out.println("Matrix tidak memiliki invers");
         }else{
-            m = getInversByOBE(m);  
-            Primitif.displayMatrix(m);
+            inputan = getInversByOBE(inputan);  
+            Primitif.displayMatrix(inputan);
         }
     }
 
-    public static void showInversCofactor(Matrix m){
-        if(Determinant.getDeterminantByCofactor(m) == 0){
+    public static void showInversCofactor(){
+        Matrix inputan;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            inputan = InputOutputKeyboard.inputSquare();
+        }else{
+            Matrix matriksFile;
+            matriksFile =  InputOutputFile.bacaFile();
+            inputan = matriksFile;
+        }
+        if(Determinant.getDeterminantByCofactor(inputan) == 0){
             System.out.println("Matrix tidak memiliki invers");
         }else{
-            m = getInversByCofactor(m);
-            Primitif.displayMatrix(m);
+            inputan = getInversByCofactor(inputan);  
+            Primitif.displayMatrix(inputan);
         }
     }
 
@@ -31,6 +78,7 @@ public class Invers {
         // kamus
         double[][] hasil = new double[m.row][m.col];
         double[][] identitas = new double[m.row][m.col];
+        Matrix hasilM;
 
         // inisialisasi
         for(int i=0;i<m.row;i++){
@@ -97,13 +145,12 @@ public class Invers {
             }
         }
 
-        m.contents = hasil;
-        return m;
+        hasilM = new Matrix(hasil, m.row, m.col);
+        return hasilM;
     }
 
     public static Matrix generateMatrixCofactor(Matrix m){
         Matrix hasil;
-        int tmp;
         double[][] temp = new double[m.row][m.col];
 
         for(int i=0;i<m.row;i++){
@@ -125,14 +172,23 @@ public class Invers {
                         hasil.contents[i][j] *= (-1);
                     }
                 }
+                // if(j>0){
+                //     System.out.print(" ");
+                // }
+                // System.out.print(hasil.contents[i][j]);
             }
+            // System.out.println();
         }
         return hasil;
     }
 
     public static Matrix getInversByCofactor(Matrix m) {
+        // double det2 = Determinant.getDeterminantByOBE(m);
         double det = Determinant.getDeterminantByCofactor(m);
         m = Primitif.transpose(generateMatrixCofactor(m));
+        // System.out.println(det);
+        // System.out.println(det2);
+        // Primitif.displayMatrix(m);
         m = Primitif.matrixKaliSkalar(m, 1/det);
         return m;
     }

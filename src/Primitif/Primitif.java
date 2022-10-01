@@ -72,15 +72,17 @@ public class Primitif {
             for(int j=0;j<m.col;j++){
                 if(i != a && j != b){
                     temp[bar][kol] = m.contents[i][j];
-                    kol++;
-                    if(kol == m.col-1){
+                    if(kol == m.col-2){
                         bar++;
-                        kol %= (m.col-1);
                     }
+                    kol = (kol+1)%(m.col-1);
                 }
             }
         }
         Matrix hasil = new Matrix(temp, m.row-1, m.col-1);
+        // System.out.println(a+" "+b);
+        // displayMatrix(hasil);
+        // System.out.println();
         return hasil;
     }
 
@@ -107,6 +109,75 @@ public class Primitif {
             }
         }
         return m;
+    }
+
+    public static Matrix matriksKaliMatriks(Matrix a, Matrix b){
+        Matrix hasil;
+        double[][] temp = new double[a.row][b.col];
+        for(int i=0;i<a.row;i++){
+            for(int j=0;j<b.col;j++){
+                temp[i][j] = 0;
+            }
+        }
+        hasil = new Matrix(temp, a.row, b.col);
+        for(int i=0;i<a.row;i++){
+            for(int j=0;j<b.col;j++){
+                for(int k=0;k<a.col;k++){
+                    temp[i][j] += a.contents[i][k]*b.contents[k][j];
+                }
+            }
+        }
+
+        return hasil;
+    }
+
+    public static Matrix tambahBaris(Matrix m, double[] barisBaru){
+        Matrix temp;
+        double[][] mTemp;
+        mTemp = new double[m.row+1][m.col];
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                mTemp[i][j] = m.contents[i][j];
+            }
+        }
+        for(int i=0;i<m.col;i++){
+            mTemp[m.row][i] = barisBaru[i];
+        }
+        temp = new Matrix(mTemp, m.row+1, m.col);
+        return temp;
+    }
+
+    public static Matrix tambahKolom(Matrix m, double[] kolomBaru){
+        Matrix temp;
+        double[][] mTemp;
+        mTemp = new double[m.row][m.col+1];
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                mTemp[i][j] = m.contents[i][j];
+            }
+        }
+        for(int i=0;i<m.row;i++){
+            mTemp[i][m.col] = kolomBaru[i];
+        }
+        temp = new Matrix(mTemp, m.row, m.col+1);
+        return temp;
+    }
+
+    public static Matrix readMatrix1(int baris, int kolom){
+        Scanner input = new Scanner(System.in);
+        System.out.println(baris);
+        System.out.println(kolom);
+        double[][] mTemp;
+        Matrix temp;
+        mTemp = new double[baris][kolom];
+        for(int i=0;i<baris;i++){
+            for(int j=0;j<kolom;j++){
+                System.out.printf("%s%d,%d ", "Masukkan elemen ke-", i, j);
+                mTemp[i][j] = input.nextDouble();
+            }
+        }
+        temp = new Matrix(mTemp, baris, kolom);
+        return temp;
     }
 }
 

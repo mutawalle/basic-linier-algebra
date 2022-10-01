@@ -1,12 +1,39 @@
 package src.Algoritma;
 
-import src.ADTMatrix.Matrix;
+import java.util.Scanner;
+
+import src.ADTMatrix.*;
+import src.InputOutput.*;
 import src.Primitif.*;
 
 public class Gauss {
-    public static void gaussSPL(Matrix m, double[] x){
+    public static void gaussSPL(){
+        Matrix m, hasil;
+        double pengurang;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            m = InputOutputKeyboard.inputSPL();
+        }else{
+            m =  InputOutputFile.bacaFile();
+        }
         m = gauss(m);
-        Primitif.displayMatrix(m);
+
+        // buat nyimpen hasil tiap x
+        hasil = new Matrix(m.contents, m.row, 1);
+
+        // asumsi solusi unik
+        // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
+        for(int i=m.row-1;i>=0;i--){
+            pengurang = 0;
+            for(int j=m.col-2;j>i;j--){
+                pengurang += m.contents[i][j]*hasil.contents[j][0];
+            }
+            hasil.contents[i][0] = m.contents[i][m.col-1] - pengurang;
+        }
+        Primitif.displayMatrix(hasil);
     }
 
     public static Matrix gauss(Matrix m) {

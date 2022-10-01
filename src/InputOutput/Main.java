@@ -3,39 +3,47 @@ package src.InputOutput;
 import src.ADTMatrix.Matrix;
 import src.Algoritma.*;
 import src.Primitif.*;
+
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Matrix m;
         String pilihan;
-        double[] x;
-        m = Primitif.readMatrix();
-        x = Primitif.readX(m.col);
         pilihan = mainMenu();
         switch(pilihan){
             case "11":
-                Gauss.gaussSPL(m, x);
+                Gauss.gaussSPL();
                 break;
             case "12":
-                GaussJordan.gaussJordanSPL(m, x);
+                GaussJordan.gaussJordanSPL();
                 break;
             case "13":
-                Invers.inversSPL(m, x);
+                Invers.inversSPL();
                 break;
             case "14":
-                Cramer.cramer(m, x);
+                Cramer.cramer();
                 break;
             case "21":
-                Determinant.showDetOBE(m);
+                Determinant.showDetOBE();
                 break;
             case "22":
-                Determinant.showDetCofactor(m);
+                Determinant.showDetCofactor();
                 break;
             case "31":
-                Invers.showInversOBE(m);
+                Invers.showInversOBE();
+                break;
             case "32":
-                Invers.showInversCofactor(m);
+                Invers.showInversCofactor();
+                break;
+            case "4":
+                PolinomInterpolation.polinomInterpolation();
+                break;
+            case "5":
+                BicubicInterpolation.bicubicInterpolate();
+                break;
+            case "6":
+                RegresiBerganda.MLR();
                 break;
         }
     }
@@ -73,7 +81,6 @@ public class Main {
                 pilihan += input.nextLine();
                 break;
         }
-        input.close();
         return pilihan;
     }
 }

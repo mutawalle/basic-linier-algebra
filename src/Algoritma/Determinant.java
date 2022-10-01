@@ -1,15 +1,46 @@
 package src.Algoritma;
 
+import java.util.Scanner;
+
 import src.ADTMatrix.Matrix;
+import src.InputOutput.*;
 import src.Primitif.*;
 
 public class Determinant {
-    public static void showDetOBE(Matrix m){
-        System.out.printf("%.2f\n", getDeterminantByOBE(m));
+    public static void showDetOBE(){
+        double det;
+        Matrix inputan;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            inputan = InputOutputKeyboard.inputSquare();
+        }else{
+            Matrix matriksFile;
+            matriksFile =  InputOutputFile.bacaFile();
+            inputan = matriksFile;
+        }
+        det = getDeterminantByOBE(inputan);
+        System.out.println(det);
     }
 
-    public static void showDetCofactor(Matrix m){
-        System.out.printf("%.2f\n", getDeterminantByCofactor(m));
+    public static void showDetCofactor(){
+        double det;
+        Matrix inputan;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            inputan = InputOutputKeyboard.inputSquare();
+        }else{
+            Matrix matriksFile;
+            matriksFile =  InputOutputFile.bacaFile();
+            inputan = matriksFile;
+        }
+        det = getDeterminantByCofactor(inputan);
+        System.out.println(det);
     }
 
     // Mendapat determinan dari matriks segitiga setelah dilakukan OBE
@@ -18,8 +49,8 @@ public class Determinant {
 
         hasil = 1;
         for(int i=0;i<m.row;i++){
-            // mengubah ujung kiri menjadi 0
             if(i<m.col){
+                // mencari ujung yang 0
                 if(m.contents[i][i] == 0){
                     int j=i+1;
                     while(j<m.row && m.contents[j][i] == 0){
@@ -41,6 +72,7 @@ public class Determinant {
     
                 // membuat ujung kiri menjadi 1
                 double pembagi = m.contents[i][i];
+                hasil *= pembagi;
                 if(pembagi != 0){
                     for(int j=0;j<m.col;j++){
                         m.contents[i][j] /= pembagi;
@@ -64,16 +96,16 @@ public class Determinant {
     public static double getDeterminantByCofactor(Matrix m){
         if(m.col == 1 && m.row == 1){
             return m.contents[0][0];
-        }else if(m.row == 2 && m.col == 2){
-            return m.contents[0][0]*m.contents[1][1] - m.contents[0][1]*m.contents[1][0];
+        }else if(m.col*m.row == 4){
+            return m.contents[0][0]*m.contents[1][1] - m.contents[0][1]*m.contents[1][0]; 
         }else{
             double hasil;
             hasil = 0;
-            for(int i=0;i<m.col;i++){
+            for(int i=0;i<m.row;i++){
                 if(i%2==0){
-                    hasil += m.contents[0][i]*getDeterminantByCofactor(Primitif.kofaktor(m, 0, i));
+                    hasil += m.contents[i][0]*getDeterminantByCofactor(Primitif.kofaktor(m, i, 0));
                 }else{
-                    hasil += (-1)*m.contents[0][i]*getDeterminantByCofactor(Primitif.kofaktor(m, 0, i));
+                    hasil += (-1)*m.contents[i][0]*getDeterminantByCofactor(Primitif.kofaktor(m, i, 0));
                 }
             }
             return hasil;
