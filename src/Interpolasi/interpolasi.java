@@ -1,4 +1,4 @@
-import java.util.*;
+// import java.util.*;
 
 import src.ADTMatrix.*;
 import src.Algoritma.Invers;
@@ -37,7 +37,7 @@ public class interpolasi {
         System.out.println("\nHasil taksiran polinom: ");
         m = "P" + (hasil.getRow() - 1) + "(" + x + ")" + " = " + taksir;
         System.out.println(m);
-        IOFile.saveFilePolinom(rumus, m);
+        // IOFile.saveFilePolinom(rumus, m);
     }
 
 

@@ -1,6 +1,8 @@
 package src.ADTMatrix;
 import java.util.*;
-import src.Algoritma.Invers;
+
+import javax.swing.text.AbstractDocument.BranchElement;
+// import src.Algoritma.Invers;
 public class Matrix {
       /* Attribute */
     static Scanner input = new Scanner(System.in);
@@ -73,17 +75,36 @@ public class Matrix {
       }
       return m3;
     }
-    
-    public static Matrix inversSPL(Matrix M) {
+
+    /* Mengecek apakah elemen-elemen diagonal pada Matrix bernilai 1 */
+    public static boolean isDiagonalSatuUtama(Matrix M) {
       /* KAMUS LOKAL */
-      Matrix kons = new Matrix(M.getRow(), 1);
-      Matrix koef = new Matrix(M.getRow(), M.getCol() - 1);
-      Matrix hasil;
+      int i;
+      boolean bool = true;
       /* ALGORITMA */
-      kons = Matrix.getMatCons(M);
-      koef = Matrix.getMatKoef(M);
-      koef = Invers.invers(koef);
-      hasil = M.multiplyMatrix(koef, kons);
-      return hasil;
+      i = 0;
+      for (i=0; i<M.getRow(); i++ ) {
+          if (M.getELMT(i, i) != 1) {
+            bool = false;
+            break;
+          }
+      }
+      return bool;
     }
-}
+    
+    public static boolean isRowZero(Matrix M, int row) {
+      int j;
+      j=0;
+      boolean bool = true;
+
+      for (j=0;j<M.getCol() - 1;j++){
+        if (M.getELMT(row, j) != 0) {
+          bool = false;
+          break;
+        }
+      }
+
+      return bool;
+    }
+
+}    
