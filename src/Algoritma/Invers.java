@@ -24,11 +24,15 @@ public class Invers {
         }
         Matrix m = inputan.m;
         Matrix x = inputan.x;
-        m = getInversByOBE(m);
-        x = Primitif.matriksKaliMatriks(m, x);
-        for(int i=0;i<x.row;i++){
-            System.out.println(x.contents[i][0]);
-        } 
+        if(Determinant.getDeterminantByOBE(m)==0){
+            System.out.println("Tidak bisa menggunakan metode ini karena tidak memiliki invers");
+        }else{
+            m = getInversByOBE(m);
+            x = Primitif.matriksKaliMatriks(m, x);
+            for(int i=0;i<x.row;i++){
+                System.out.println(x.contents[i][0]);
+            } 
+        }
     }
 
     public static void showInversOBE(){
@@ -50,6 +54,7 @@ public class Invers {
         }else{
             inputan = getInversByOBE(inputan);  
             Primitif.displayMatrix(inputan);
+            InputOutputFile.OutputInvers(inputan);
         }
     }
 
@@ -71,6 +76,7 @@ public class Invers {
         }else{
             inputan = getInversByCofactor(inputan);  
             Primitif.displayMatrix(inputan);
+            InputOutputFile.OutputInvers(inputan);
         }
     }
 

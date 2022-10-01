@@ -23,6 +23,7 @@ public class Determinant {
         }
         det = getDeterminantByOBE(inputan);
         System.out.println(det);
+        InputOutputFile.OutputSatuVariabel(det);
     }
 
     public static void showDetCofactor(){
@@ -41,6 +42,7 @@ public class Determinant {
         }
         det = getDeterminantByCofactor(inputan);
         System.out.println(det);
+        InputOutputFile.OutputSatuVariabel(det);
     }
 
     // Mendapat determinan dari matriks segitiga setelah dilakukan OBE

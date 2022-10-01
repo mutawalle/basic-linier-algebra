@@ -22,12 +22,21 @@ public class GaussJordan {
         }
         m = gaussJordan(m);
 
-        // asumsi solusi unik
-        // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
-        // ini langsung output nilai x yang didapat setelah gaussjordan, matriks berbentuk augmented matriks jadi tinggal outputin semua nilai di kolom terkahir karena asumsi unik
-        for(int i=0;i<m.row;i++){
-            System.out.println(m.contents[i][m.col-1]);
+        if(m.col-1>m.row){
+            System.out.println("Tidak meiliki solusi");
+        }else{
+            // asumsi solusi unik
+            // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
+            // ini langsung output nilai x yang didapat setelah gaussjordan, matriks berbentuk augmented matriks jadi tinggal outputin semua nilai di kolom terkahir karena asumsi unik
+            Matrix hasil;
+            hasil = new Matrix(m.contents, m.row, 1);
+            for(int i=0;i<m.row;i++){
+                System.out.println(m.contents[i][m.col-1]);
+                hasil.contents[i][0] = m.contents[i][m.col-1];
+            }
+            InputOutputFile.OutputSPL(hasil);
         }
+
     }
     public static Matrix gaussJordan(Matrix m) {
         m = Gauss.gauss(m);

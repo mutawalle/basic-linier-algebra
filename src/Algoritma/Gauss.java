@@ -21,19 +21,23 @@ public class Gauss {
         }
         m = gauss(m);
 
-        // buat nyimpen hasil tiap x
-        hasil = new Matrix(m.contents, m.row, 1);
-
-        // asumsi solusi unik
-        // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
-        for(int i=m.row-1;i>=0;i--){
-            pengurang = 0;
-            for(int j=m.col-2;j>i;j--){
-                pengurang += m.contents[i][j]*hasil.contents[j][0];
+        if(m.col-1>m.row){
+            System.out.println("Tidak memiliki solusi");
+        }else{
+            // buat nyimpen hasil tiap x
+            hasil = new Matrix(m.contents, m.row, 1);
+            // asumsi solusi unik
+            // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
+            for(int i=m.row-1;i>=0;i--){
+                pengurang = 0;
+                for(int j=m.col-2;j>i;j--){
+                    pengurang += m.contents[i][j]*hasil.contents[j][0];
+                }
+                hasil.contents[i][0] = m.contents[i][m.col-1] - pengurang;
             }
-            hasil.contents[i][0] = m.contents[i][m.col-1] - pengurang;
+            Primitif.displayMatrix(hasil);
+            InputOutputFile.OutputSPL(hasil);
         }
-        Primitif.displayMatrix(hasil);
     }
 
     public static Matrix gauss(Matrix m) {

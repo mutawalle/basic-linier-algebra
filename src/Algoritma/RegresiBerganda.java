@@ -38,21 +38,36 @@ public class RegresiBerganda {
     ...
     [x1k, x2k,..,xkk, yk]]*/
     
-    int k, row, i, j;
-    Matrix data, equation, xTaksir;
-    double[][] content;
-    Scanner input = new Scanner(System.in);
-    System.out.print("Masukkan banyaknya x peubah:\n");
-    double hasilTaksir;
+        int k, row, i, j;
+        Matrix data, equation, xTaksir;
+        double hasilTaksir;
+        double[][] content;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        int pilihan = input.nextInt();
+        if(pilihan==1){
+            System.out.print("Masukkan banyaknya x peubah:\n");
+        
+            k = input.nextInt();
+            System.out.print("Masukkan banyak sampel data: \n");
+            row = input.nextInt();
+            System.out.println("Masukkan Matrix");
+            data = Primitif.readMatrix1(row, k+1);
+            System.out.println("Masukkan x sebanyak k");
+            xTaksir = Primitif.readMatrix1(k, 1);
+        }else{
+            data = InputOutputFile.bacaBikubik();
+            content = new double[data.col-1][1];
+            xTaksir = new Matrix(content, data.col-1, 1);
+            for(i=0;i<data.col-1;i++){
+                xTaksir.contents[i][0] = data.contents[data.row-1][i];
+            }
+            data = new Matrix(data.contents, data.row-1, data.col);
+            k = data.col-1;
+            row = data.row-1;
+        }
 
-
-    k = input.nextInt();
-    System.out.print("Masukkan banyak sampel data: \n");
-    row = input.nextInt();
-    System.out.println("Masukkan Matrix");
-    data = Primitif.readMatrix1(row, k+1);
-    System.out.println("Masukkan x sebanyak k");
-    xTaksir = Primitif.readMatrix1(k, 1);
     //Pembuatan normal estimation equation
     
     content = new double[k+1][k+2];
@@ -88,6 +103,7 @@ public class RegresiBerganda {
         }
     }
     System.out.println(hasilTaksir);
+    InputOutputFile.OutputSatuVariabel(hasilTaksir);
 
     }
 }

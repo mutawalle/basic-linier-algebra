@@ -28,9 +28,15 @@ public class PolinomInterpolation {
         m = temp.x;
 
         hasil=0;
+        System.out.print("f(x) = ");
         for(int i=0;i<m.row;i++){
             hasil += Math.pow(x, i)*m.contents[i][0];
         }
+        for(int i=m.row-1;i>0;i--){
+            System.out.print(m.contents[i][0]+"x^"+i+" + ");
+        }
+        System.out.println(m.contents[0][0]);
         System.out.println("hasilnya adalah "+hasil);
+        InputOutputFile.OutputInterpolasiPolinom(m, hasil);
     }
 }

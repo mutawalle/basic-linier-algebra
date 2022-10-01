@@ -27,13 +27,16 @@ public class Cramer {
         double det, hasil[];
         hasil = new double[x.row]; 
         det = Determinant.getDeterminantByCofactor(m);
-
-        for(int i=0;i<x.row;i++){
-            hasil[i] = Determinant.getDeterminantByCofactor(substitusiX(m, x, i))/det;
-        }
-
-        for(int i=0;i<x.row;i++){
-            System.out.println(hasil[i]);
+        if(det==0){
+            System.out.println("Tidak bisa menggunakan metode ini karena determinan 0");
+        }else{
+            for(int i=0;i<x.row;i++){
+                hasil[i] = Determinant.getDeterminantByCofactor(substitusiX(m, x, i))/det;
+            }
+    
+            for(int i=0;i<x.row;i++){
+                System.out.println(hasil[i]);
+            }
         }
     }
 

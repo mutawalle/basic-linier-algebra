@@ -4,6 +4,7 @@ import java.io.ObjectInputFilter.Status;
 import java.util.Scanner;
 
 import src.ADTMatrix.Matrix;
+import src.InputOutput.InputOutputFile;
 import src.InputOutput.InputOutputKeyboard;
 import src.Primitif.Primitif;
 
@@ -12,14 +13,27 @@ public class BicubicInterpolation {
         Scanner input = new Scanner(System.in);
         Matrix m;
         double a, b, hasil;
-        m = InputOutputKeyboard.inputSquare();
-
-        System.out.println("Masukkan x untuk ditaksir");
-        a = input.nextDouble();
-        System.out.println("Masukkan y untuk ditaksir");
-        b = input.nextDouble();
+        int pilihan;
+        System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
+        System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
+        pilihan = input.nextInt();
+        if(pilihan==1){
+            m = InputOutputKeyboard.inputSquare();
+            System.out.println("Masukkan x untuk ditaksir");
+            a = input.nextDouble();
+            System.out.println("Masukkan y untuk ditaksir");
+            b = input.nextDouble();
+        }else{
+            m =  InputOutputFile.bacaBikubik();
+            a = m.contents[m.row-1][0];
+            b = m.contents[m.row-1][1];
+            m = new Matrix(m.contents, m.row-1, m.col);
+            System.out.println(a);
+            System.out.println(b);
+        }
         hasil = getOneInterpolate(m, a, b);
         System.out.println(hasil);
+        InputOutputFile.OutputSatuVariabel(hasil);
     }
 
     public static Matrix generateA(Matrix m, int baris1, int baris2, int kolom1, int kolom2){
