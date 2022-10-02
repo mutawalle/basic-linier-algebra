@@ -45,6 +45,11 @@ public class Main {
             case "6":
                 RegresiBerganda.MLR();
                 break;
+            case "7":
+                InputOutputFile.bacaGambar();
+                break;
+            case "8":
+                System.out.println("keluar");
         }
     }
 
@@ -58,7 +63,8 @@ public class Main {
         System.out.println("4. Interpolasi Polinom");
         System.out.println("5. Interpolasi Bicubic");
         System.out.println("6. Regresi linier berganda");
-        System.out.println("7. Keluar");
+        System.out.println("7. Image Scaling");
+        System.out.println("8. Keluar");
         pilihan = input.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();

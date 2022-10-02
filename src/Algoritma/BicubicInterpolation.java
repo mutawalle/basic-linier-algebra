@@ -88,15 +88,4 @@ public class BicubicInterpolation {
 
         return hasil;
     }
-
-    public static Matrix bicubicInterpolation(Matrix m){
-        Matrix hasil;
-        double[][] temp;
-        temp = new double[m.row*2][m.col*2];
-
-        
-
-        hasil = new Matrix(temp, m.row*2, m.col*2);
-        return hasil;
-    }
 }

@@ -2,7 +2,12 @@ package src.InputOutput;
 
 import java.io.*;
 import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import src.ADTMatrix.*;
+import src.Algoritma.BicubicInterpolation;
 import src.Primitif.Primitif;
 
 public class InputOutputFile {
@@ -202,6 +207,72 @@ public class InputOutputFile {
             bw.close();
         }catch(Exception ex){
             return;
+        }
+    }
+
+    public static void bacaGambar(){
+        Matrix gambar;
+        try{
+            Matrix A;
+            BufferedImage image = ImageIO.read( new File(getPath()+"\\test\\input.png"));
+            double[][] colors = new double[image.getWidth()][image.getHeight()];
+            BufferedReader br = new BufferedReader(
+                new FileReader(getPath()+"\\test\\input.png")
+            );
+
+            for(int i=0;i<image.getHeight();i++){
+                for(int j=0;j<image.getWidth();j++){
+                    colors[i][j] = image.getRGB(i, j);
+                }
+            }
+
+            double hasil;
+            int indeks;
+            gambar = new Matrix(colors, image.getHeight(), image.getWidth());
+            Matrix mOutput = new Matrix(new double[2*gambar.row][2*gambar.col], 2*gambar.row, 2*gambar.col);
+
+            for(int i=0;i<gambar.row;i+=4){
+                for(int j=0;j<gambar.col;j+=4){
+                    A = BicubicInterpolation.generateA(gambar, i, i+4, j, j+4);
+    
+                    for(int m=1;m<=8;m++){
+                        for(int n=1;n<=8;n++){
+    
+                            hasil=0;
+                            indeks=0;
+                            for(int k=0;k<4;k++){
+                                for(int l=0;l<4;l++){
+                                    hasil += A.contents[indeks][0]*Math.pow(m/4, k)*Math.pow(n/4, l);
+                                    indeks++;
+                                }
+                            }
+    
+                            mOutput.contents[i*2+(m-1)][j*2+(n-1)] = hasil;
+                        }
+                    }
+                }
+
+            }
+
+            br.close();
+            
+            BufferedImage image2 = new BufferedImage(mOutput.col, mOutput.row, BufferedImage.TYPE_INT_RGB);
+            for(int i=0; i<mOutput.row; i++) {
+                for(int j=0; j<mOutput.col; j++) {
+                    int a = (int) mOutput.contents[i][j];
+                    Color newColor = new Color(a);
+                    image2.setRGB(i,j,newColor.getRGB());
+                }
+            }
+            File fOutput = new File(getPath()+"\\test\\output.png");
+            ImageIO.write(image2, "png", fOutput);
+
+
+            // return temp;
+        }catch(Exception ex){
+            double[][] x = new double[0][0];
+            gambar = new Matrix(x, 0, 0);
+            // return temp;
         }
     }
 }
