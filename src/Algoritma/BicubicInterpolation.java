@@ -28,11 +28,9 @@ public class BicubicInterpolation {
             a = m.contents[m.row-1][0];
             b = m.contents[m.row-1][1];
             m = new Matrix(m.contents, m.row-1, m.col);
-            System.out.println(a);
-            System.out.println(b);
         }
         hasil = getOneInterpolate(m, a, b);
-        System.out.println(hasil);
+        System.out.println("f(" + a + "," + b+ ") = " + hasil);
         InputOutputFile.OutputSatuVariabel(hasil);
     }
 

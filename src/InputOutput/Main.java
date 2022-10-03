@@ -53,7 +53,7 @@ public class Main {
         }
     }
 
-    public static String mainMenu() {
+    public static String mainMenu(){
         String pilihan;
         Scanner input = new Scanner(System.in);
         System.out.println("Main Menu");

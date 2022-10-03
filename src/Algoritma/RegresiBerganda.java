@@ -29,8 +29,8 @@ public class RegresiBerganda {
 
     //Multiple Linear Regression
     public static void MLR(){
-    /*Prosedur membuat matrix data, kemudian membuat matrix estimation equation yang disimpan di equation*/
-    /*Mengembalikan matrix SPL (belum diselesaikan)*/
+    /*Prosedur membuat matrix data dan matrix taksiran, kemudian membuat matrix estimation equation yang disimpan di equation*/
+    /*Mengembalikan persamaan estimation equation dan hasil taksiran*/
     
     /*row format 
     [[x11,x21,..,xk1, y1]
@@ -52,9 +52,9 @@ public class RegresiBerganda {
             k = input.nextInt();
             System.out.print("Masukkan banyak sampel data: \n");
             row = input.nextInt();
-            System.out.println("Masukkan Matrix");
+            System.out.println("Masukkan Data");
             data = Primitif.readMatrix1(row, k+1);
-            System.out.println("Masukkan x sebanyak k");
+            System.out.println("Masukkan taksiran");
             xTaksir = Primitif.readMatrix1(k, 1);
         }else{
             data = InputOutputFile.bacaBikubik();
@@ -65,7 +65,7 @@ public class RegresiBerganda {
             }
             data = new Matrix(data.contents, data.row-1, data.col);
             k = data.col-1;
-            row = data.row-1;
+            row = data.row;
         }
 
     //Pembuatan normal estimation equation
@@ -92,17 +92,29 @@ public class RegresiBerganda {
             };   
         }
     }
-    equation = GaussJordan.gaussJordan(data);
+    
+    equation = GaussJordan.gaussJordan(equation);
+
+
+    System.out.print("Persamaan Regresi\ny = ");
 
     hasilTaksir = 0;
     for(i=0;i<equation.row;i++){
+        System.out.print(equation.contents[i][equation.col-1]);
         if(i==0){
             hasilTaksir += equation.contents[i][equation.col-1];
         }else{
             hasilTaksir += equation.contents[i][equation.col-1]*xTaksir.contents[i-1][0];
+            System.out.print("*x" + i);
         }
+        if(i!= equation.row - 1){
+            System.out.print(" + ");
+        }else{
+            System.out.print("\n");
+        }
+
     }
-    System.out.println(hasilTaksir);
+    System.out.println("Hasil taksiran regresi = "+ hasilTaksir);
     InputOutputFile.OutputSatuVariabel(hasilTaksir);
 
     }
