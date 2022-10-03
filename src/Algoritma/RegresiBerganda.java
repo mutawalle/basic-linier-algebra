@@ -48,14 +48,13 @@ public class RegresiBerganda {
         int pilihan = input.nextInt();
         if(pilihan==1){
             System.out.print("Masukkan banyaknya x peubah:\n");
-        
             k = input.nextInt();
             System.out.print("Masukkan banyak sampel data: \n");
             row = input.nextInt();
             System.out.println("Masukkan Data");
             data = Primitif.readMatrix1(row, k+1);
             System.out.println("Masukkan taksiran");
-            xTaksir = Primitif.readMatrix1(k, 1);
+            xTaksir = Primitif.readMatrixtaksir(k, 1);
         }else{
             data = InputOutputFile.bacaBikubik();
             content = new double[data.col-1][1];
@@ -96,7 +95,7 @@ public class RegresiBerganda {
     equation = GaussJordan.gaussJordan(equation);
 
 
-    System.out.print("Persamaan Regresi\ny = ");
+    System.out.print("Persamaan Regresi berganda\ny = ");
 
     hasilTaksir = 0;
     for(i=0;i<equation.row;i++){
@@ -115,7 +114,7 @@ public class RegresiBerganda {
 
     }
     System.out.println("Hasil taksiran regresi = "+ hasilTaksir);
-    InputOutputFile.OutputSatuVariabel(hasilTaksir);
+    InputOutputFile.OutputRegresi(hasilTaksir, equation, xTaksir);
 
     }
 }

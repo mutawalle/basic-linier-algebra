@@ -165,14 +165,31 @@ public class Primitif {
 
     public static Matrix readMatrix1(int baris, int kolom){
         Scanner input = new Scanner(System.in);
-        System.out.println(baris);
-        System.out.println(kolom);
         double[][] mTemp;
         Matrix temp;
         mTemp = new double[baris][kolom];
         for(int i=0;i<baris;i++){
             for(int j=0;j<kolom;j++){
-                System.out.printf("%s%d,%d ", "Masukkan elemen ke-", i, j);
+                if(j!=kolom-1){
+                System.out.printf("%s%d,%d: ", "Masukkan x", i+1, j+1);
+                mTemp[i][j] = input.nextDouble();
+                }else{
+                    System.out.printf("%s%d: ", "Masukkan y", i+1);
+                    mTemp[i][j] = input.nextDouble();  
+                }
+            }
+        }
+        temp = new Matrix(mTemp, baris, kolom);
+        return temp;
+    }
+    public static Matrix readMatrixtaksir(int baris, int kolom){
+        Scanner input = new Scanner(System.in);
+        double[][] mTemp;
+        Matrix temp;
+        mTemp = new double[baris][kolom];
+        for(int i=0;i<baris;i++){
+            for(int j=0;j<kolom;j++){
+                System.out.printf("%s%d: ", "Masukkan x", i+1);
                 mTemp[i][j] = input.nextDouble();
             }
         }

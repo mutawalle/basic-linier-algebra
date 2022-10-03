@@ -31,7 +31,7 @@ public class BicubicInterpolation {
         }
         hasil = getOneInterpolate(m, a, b);
         System.out.println("f(" + a + "," + b+ ") = " + hasil);
-        InputOutputFile.OutputSatuVariabel(hasil);
+        InputOutputFile.OutputBikubik(hasil, a, b);
     }
 
     public static Matrix generateA(Matrix m, int baris1, int baris2, int kolom1, int kolom2){

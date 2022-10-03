@@ -275,4 +275,39 @@ public class InputOutputFile {
             // return temp;
         }
     }
+    public static void OutputBikubik(double hasil, double x, double y){
+        try{
+            BufferedWriter bw = new BufferedWriter(
+                new FileWriter(getPath()+"\\test\\output.txt")
+            );
+            bw.write("f(" + x + "," + y+ ") = " + hasil);
+            bw.close();
+        }catch(Exception ex){
+            return;
+        }
+    }
+    public static void OutputRegresi(double hasil, Matrix equation, Matrix xTaksir){
+        try{
+            BufferedWriter bw = new BufferedWriter(
+                new FileWriter(getPath()+"\\test\\output.txt")
+            );
+            int i;
+            bw.write("Persamaan Regresi berganda\ny = ");
+            for(i=0;i<equation.row;i++){
+                bw.write(""+equation.contents[i][equation.col-1]);
+                if(i!=0){
+                    bw.write("*x" + i);
+                }
+                if(i!= equation.row - 1){
+                    bw.write(" + ");
+                }else{
+                    bw.write("\n");
+                }
+            }
+            bw.write("Hasil taksiran regresi = "+ hasil);
+            bw.close();
+        }catch(Exception ex){
+            return;
+        }
+    }
 }
