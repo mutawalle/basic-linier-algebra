@@ -48,23 +48,29 @@ public class Determinant {
     // Mendapat determinan dari matriks segitiga setelah dilakukan OBE
     public static double getDeterminantByOBE(Matrix m){
         double hasil;
+        double[][] mtemp = new double[m.row][m.col];
+        for(int i=0;i<m.row;i++){
+            for(int j=0;j<m.col;j++){
+                mtemp[i][j] = m.contents[i][j];
+            }
+        }
 
         hasil = 1;
         for(int i=0;i<m.row;i++){
             if(i<m.col){
                 // mencari ujung yang 0
-                if(m.contents[i][i] == 0){
+                if(mtemp[i][i] == 0){
                     int j=i+1;
-                    while(j<m.row && m.contents[j][i] == 0){
+                    while(j<m.row && mtemp[j][i] == 0){
                         j++;
                     }
                     if(j<m.row){
                         hasil *= (-1);
                         double temp;
                         for(int k=0;k<m.col;k++){
-                            temp = m.contents[i][k];
-                            m.contents[i][k] = m.contents[j][k];
-                            m.contents[j][k] = temp;
+                            temp = mtemp[i][k];
+                            mtemp[i][k] = mtemp[j][k];
+                            mtemp[j][k] = temp;
                         }
                     }else{
                         hasil = 0;
@@ -73,19 +79,19 @@ public class Determinant {
                 }
     
                 // membuat ujung kiri menjadi 1
-                double pembagi = m.contents[i][i];
+                double pembagi = mtemp[i][i];
                 hasil *= pembagi;
                 if(pembagi != 0){
                     for(int j=0;j<m.col;j++){
-                        m.contents[i][j] /= pembagi;
+                        mtemp[i][j] /= pembagi;
                     }
                 }
     
                 // membuat kolom di bawah angka 1 menjadi 0
                 for(int j=i+1;j<m.row;j++){
-                    double pengurang = m.contents[j][i];
+                    double pengurang = mtemp[j][i];
                     for(int k=0;k<m.col;k++){
-                        m.contents[j][k] -= m.contents[i][k]*pengurang;
+                        mtemp[j][k] -= mtemp[i][k]*pengurang;
                     }
                 }
             }

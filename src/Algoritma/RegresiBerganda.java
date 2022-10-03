@@ -55,7 +55,7 @@ public class RegresiBerganda {
             System.out.println("Masukkan Matrix");
             data = Primitif.readMatrix1(row, k+1);
             System.out.println("Masukkan x sebanyak k");
-            xTaksir = Primitif.readMatrix1(k, 1);
+            xTaksir = Primitif.readMatrixtaksir(k, 1);
         }else{
             data = InputOutputFile.bacaBikubik();
             content = new double[data.col-1][1];
@@ -93,17 +93,25 @@ public class RegresiBerganda {
         }
     }
     equation = GaussJordan.gaussJordan(data);
+    System.out.print("Persamaan Regresi berganda\ny = ");
 
     hasilTaksir = 0;
     for(i=0;i<equation.row;i++){
+        System.out.print(equation.contents[i][equation.col-1]);
         if(i==0){
             hasilTaksir += equation.contents[i][equation.col-1];
         }else{
             hasilTaksir += equation.contents[i][equation.col-1]*xTaksir.contents[i-1][0];
+            System.out.print("*x" + i);
+        }
+        if(i!= equation.row - 1){
+            System.out.print(" + ");
+        }else{
+            System.out.print("\n");
         }
     }
     System.out.println(hasilTaksir);
-    InputOutputFile.OutputSatuVariabel(hasilTaksir);
+    InputOutputFile.OutputRegresi(hasilTaksir, equation, xTaksir);
 
     }
 }

@@ -2,13 +2,15 @@ package src.Algoritma;
 
 import java.util.Scanner;
 
+import javax.print.attribute.standard.PrinterInfo;
+
 import src.ADTMatrix.*;
 import src.InputOutput.*;
 import src.Primitif.*;
 
 public class Gauss {
     public static void gaussSPL(){
-        Matrix m, hasil;
+        Matrix m, hasil, mJordan;
         double pengurang;
         Scanner input = new Scanner(System.in);
         System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
@@ -24,19 +26,45 @@ public class Gauss {
         if(m.col-1>m.row){
             System.out.println("Tidak memiliki solusi");
         }else{
-            // buat nyimpen hasil tiap x
-            hasil = new Matrix(m.contents, m.row, 1);
-            // asumsi solusi unik
-            // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
-            for(int i=m.row-1;i>=0;i--){
-                pengurang = 0;
-                for(int j=m.col-2;j>i;j--){
-                    pengurang += m.contents[i][j]*hasil.contents[j][0];
-                }
-                hasil.contents[i][0] = m.contents[i][m.col-1] - pengurang;
+            while(GaussJordan.cekBarisTerakhirKosong(m)){
+                m.row--;
             }
-            Primitif.displayMatrix(hasil);
-            InputOutputFile.OutputSPL(hasil);
+
+            if(GaussJordan.takBersolusi(m)){
+                System.out.println("Tidak meiliki solusi");
+            }else{
+                mJordan = GaussJordan.gaussJordan(m);
+
+                if(mJordan.col-1>mJordan.row){
+                    // parametrik
+                    for(int i=0;i<mJordan.row;i++){
+                        System.out.print("x"+(i+1)+" = "+mJordan.contents[i][mJordan.col-1]);
+                        for(int j=i+1;j<mJordan.col-1;j++){
+                            if(mJordan.contents[i][j]!=0){
+                                System.out.print(" + "+(-1*mJordan.contents[i][j])+"x"+(j+1));
+                            }
+                        }
+                        System.out.println();
+                    }
+                    InputOutputFile.outputParametrik(mJordan);
+                }else{
+                    // buat nyimpen hasil tiap x
+                    hasil = new Matrix(m.contents, m.row, 1);
+                    // asumsi solusi unik
+                    // jadi disini harusnya ada kondisi buat ngehandle solusi parametrik dibuat if else mungkin
+                    for(int i=m.row-1;i>=0;i--){
+                        pengurang = 0;
+                        for(int j=m.col-2;j>i;j--){
+                            pengurang += m.contents[i][j]*hasil.contents[j][0];
+                        }
+                        hasil.contents[i][0] = m.contents[i][m.col-1] - pengurang;
+                    }
+                    for(int i=0;i<m.row;i++){
+                        System.out.println("x"+(i+1)+" = "+m.contents[i][0]);
+                    }
+                    InputOutputFile.OutputSPL(hasil);
+                }
+            }
         }
     }
 

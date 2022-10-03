@@ -28,12 +28,10 @@ public class BicubicInterpolation {
             a = m.contents[m.row-1][0];
             b = m.contents[m.row-1][1];
             m = new Matrix(m.contents, m.row-1, m.col);
-            System.out.println(a);
-            System.out.println(b);
         }
         hasil = getOneInterpolate(m, a, b);
-        System.out.println(hasil);
-        InputOutputFile.OutputSatuVariabel(hasil);
+        System.out.println("f("+a+","+b+") = "+hasil);
+        InputOutputFile.OutputBikubik(hasil, a, b);
     }
 
     public static Matrix generateA(Matrix m, int baris1, int baris2, int kolom1, int kolom2){

@@ -19,6 +19,21 @@ public class PolinomInterpolation {
             m = InputOutputKeyboard.inputPolinom();
         }else{
             m =  InputOutputFile.bacaFile();
+            double[][] mTemp;
+
+            mTemp = new double[m.row][m.row+1];
+
+            for(int i=0;i<m.row;i++){
+                for(int j=0;j<m.row+1;j++){
+                    if(j<=m.row){
+                        mTemp[i][j] = Math.pow(m.contents[i][0], j);
+                    }else{
+                        mTemp[i][j] = m.contents[i][1];
+                    }
+                }
+            }
+            
+            m = new Matrix(mTemp, m.row, m.row+1);
         }
         
         System.out.println("Masukkan x yang akan ditaksir ");

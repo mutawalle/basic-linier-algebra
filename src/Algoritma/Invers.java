@@ -24,14 +24,19 @@ public class Invers {
         }
         Matrix m = inputan.m;
         Matrix x = inputan.x;
-        if(Determinant.getDeterminantByOBE(m)==0){
-            System.out.println("Tidak bisa menggunakan metode ini karena tidak memiliki invers");
+        if(m.row!=m.col){
+            System.out.println("Tidak bisa menggunakan metode ini karena bukan matriks square sehingga tidak memiliki invers");
         }else{
-            m = getInversByOBE(m);
-            x = Primitif.matriksKaliMatriks(m, x);
-            for(int i=0;i<x.row;i++){
-                System.out.println(x.contents[i][0]);
-            } 
+            if(Determinant.getDeterminantByOBE(m) == 0){
+                System.out.println("Tidak memiliki solusi");
+            }else{
+                m = getInversByOBE(m);
+                x = Primitif.matriksKaliMatriks(m, x);
+                for(int i=0;i<x.row;i++){
+                    System.out.println("x"+(i+1)+" = "+x.contents[i][0]);
+                }
+                InputOutputFile.OutputSPL(x);
+            }
         }
     }
 

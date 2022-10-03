@@ -24,18 +24,24 @@ public class Cramer {
         Matrix m = inputan.m;
         Matrix x = inputan.x;
 
-        double det, hasil[];
-        hasil = new double[x.row]; 
-        det = Determinant.getDeterminantByCofactor(m);
-        if(det==0){
-            System.out.println("Tidak bisa menggunakan metode ini karena determinan 0");
+        double det, hasil[][];
+        hasil = new double[x.row][1];
+        if(m.row!=m.col){
+            System.out.println("Tidak bisa menggunakan metode ini karena tidak memiliki determinan");
         }else{
-            for(int i=0;i<x.row;i++){
-                hasil[i] = Determinant.getDeterminantByCofactor(substitusiX(m, x, i))/det;
-            }
-    
-            for(int i=0;i<x.row;i++){
-                System.out.println(hasil[i]);
+            det = Determinant.getDeterminantByCofactor(m);
+            if(det==0){
+                System.out.println("Tidak memiliki solusi");
+            }else{
+                for(int i=0;i<x.row;i++){
+                    hasil[i][0] = Determinant.getDeterminantByCofactor(substitusiX(m, x, i))/det;
+                }
+        
+                for(int i=0;i<x.row;i++){
+                    System.out.println("x"+(i+1)+" = "+hasil[i][0]);
+                }
+                Matrix mHasil = new Matrix(hasil, x.row, 1);
+                InputOutputFile.OutputSPL(mHasil);
             }
         }
     }

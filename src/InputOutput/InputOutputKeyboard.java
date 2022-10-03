@@ -83,7 +83,7 @@ public class InputOutputKeyboard {
             }
         }
         
-        m = new Matrix(mTemp, n, n+1);
+        m = new Matrix(mTemp, n+1, n+2);
         return m;
     }
 }
