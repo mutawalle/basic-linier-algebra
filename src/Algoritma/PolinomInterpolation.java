@@ -10,7 +10,7 @@ public class PolinomInterpolation {
     public static void polinomInterpolation(){
         Scanner input = new Scanner(System.in);
         PasanganMatrix temp;
-        Matrix m;
+        Matrix m, mtemp;
         double x, hasil;
         System.out.println("Ketik 1 untuk input keyboard, Ketik lainnya untuk input file");
         System.out.println("Dan Pastikan file ada di folder test jika pilih input file");
@@ -20,12 +20,12 @@ public class PolinomInterpolation {
         }else{
             m =  InputOutputFile.bacaFile();
             double[][] mTemp;
-
+            
             mTemp = new double[m.row][m.row+1];
-
+            
             for(int i=0;i<m.row;i++){
                 for(int j=0;j<m.row+1;j++){
-                    if(j<=m.row){
+                    if(j<m.row){
                         mTemp[i][j] = Math.pow(m.contents[i][0], j);
                     }else{
                         mTemp[i][j] = m.contents[i][1];
@@ -35,10 +35,11 @@ public class PolinomInterpolation {
             
             m = new Matrix(mTemp, m.row, m.row+1);
         }
-        
+
         System.out.println("Masukkan x yang akan ditaksir ");
         x = input.nextDouble();
-        m = GaussJordan.gaussJordan(m);
+        mtemp = Gauss.gauss(m);
+        m = GaussJordan.gaussJordan(mtemp);
         temp = InputOutputFile.pisah(m);
         m = temp.x;
 

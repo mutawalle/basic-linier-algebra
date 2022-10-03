@@ -39,7 +39,7 @@ public class RegresiBerganda {
     [x1k, x2k,..,xkk, yk]]*/
     
         int k, row, i, j;
-        Matrix data, equation, xTaksir;
+        Matrix data, equation, xTaksir, mtemp;
         double hasilTaksir;
         double[][] content;
         Scanner input = new Scanner(System.in);
@@ -92,7 +92,8 @@ public class RegresiBerganda {
             };   
         }
     }
-    equation = GaussJordan.gaussJordan(data);
+    mtemp = Gauss.gauss(data);
+    equation = GaussJordan.gaussJordan(mtemp);
     System.out.print("Persamaan Regresi berganda\ny = ");
 
     hasilTaksir = 0;
